@@ -20,6 +20,14 @@ def getCredentials():
         f.close()
         return [username, password]
 
+def login(browser, email, passwd):
+    emailElement = browser.find_element_by_xpath('//*[@id="email"]/div/div/div/div/div/div[2]/div/form/div[1]/div/input')
+    passwordElement = browser.find_element_by_xpath('//*[@id="password"]/div/div/div/div/div/div[2]/div/form/div[2]/div/input')
+
+    # emailElement.sendKeys(email)
+    # passwordElement.sendKeys(passwd)
+
+
 def main():
 
     username, password = getCredentials()
@@ -45,6 +53,7 @@ def main():
     clickOn(browser, '//*[@id="login-with-epic"]')
 
     # Auto login
+    login(browser, username, password)
 
     # Make purchase
 
