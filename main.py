@@ -13,8 +13,17 @@ def clickOn(browser, xPath):
         except:
             sleep(1)
 
+def getCredentials():
+    with open("credentials.txt") as f:
+        username = f.readline().rstrip("\n")
+        password = f.readline()
+        f.close()
+        return [username, password]
 
 def main():
+
+    username, password = getCredentials()
+
     browser = None
 
     try:
@@ -43,7 +52,6 @@ def main():
     # clickOn(browser, '//*[@id="purchase-app"]/div/div[4]/div[1]/div[2]/div[5]/div/div/button')
 
     sleep(200)
-
 
 if __name__ == "__main__":
     main()
