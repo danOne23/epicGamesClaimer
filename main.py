@@ -13,6 +13,7 @@ def clickOn(browser, xPath):
         except:
             sleep(1)
 
+
 def getCredentials():
     with open("credentials.txt") as f:
         username = f.readline().rstrip("\n")
@@ -20,9 +21,12 @@ def getCredentials():
         f.close()
         return [username, password]
 
+
 def login(browser, email, passwd):
-    emailElement = browser.find_element_by_xpath('//*[@id="email"]/div/div/div/div/div/div[2]/div/form/div[1]/div/input')
-    passwordElement = browser.find_element_by_xpath('//*[@id="password"]/div/div/div/div/div/div[2]/div/form/div[2]/div/input')
+    emailElement = browser.find_element_by_xpath(
+        '//*[@id="email"]/div/div/div/div/div/div[2]/div/form/div[1]/div/input')
+    passwordElement = browser.find_element_by_xpath(
+        '//*[@id="password"]/div/div/div/div/div/div[2]/div/form/div[2]/div/input')
 
     # emailElement.sendKeys(email)
     # passwordElement.sendKeys(passwd)
@@ -42,8 +46,6 @@ def main():
     except KeyError:
         browser = webdriver.Chrome()
 
-        
-
     browser.get("https://www.epicgames.com/store/en-US/free-games")
 
     freeGamePath = '//*[@id="dieselReactWrapper"]/div/div[4]/main/div/div/div/div/div[2]/div[2]/div/div/section/div/div[1]/div/div/a'
@@ -53,7 +55,12 @@ def main():
     clickOn(browser, '//*[@id="login-with-epic"]')
 
     # Auto login
-    login(browser, username, password)
+    while True:
+        try:
+            login(browser, username, password)
+            break
+        except:
+            sleep(1)
 
     # Make purchase
 
@@ -61,6 +68,7 @@ def main():
     # clickOn(browser, '//*[@id="purchase-app"]/div/div[4]/div[1]/div[2]/div[5]/div/div/button')
 
     sleep(200)
+
 
 if __name__ == "__main__":
     main()
