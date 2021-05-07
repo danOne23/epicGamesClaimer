@@ -23,16 +23,10 @@ def main():
 
     browser = None
 
-    # try:
-    # browser_path = os.environ["BROWSER_PATH"]
+    browser_path = os.environ["BROWSER_PATH"]
     option = webdriver.ChromeOptions()
-    # option.binary_location = browser_path
-    # option.add_argument("user-data-dir=/Users/henrik/Library/Application Support/Google/Chrome/Profile 2")
-    # option.add_argument("--disable-extensions")
+    option.binary_location = browser_path
     browser = webdriver.Chrome(options=option)
-    # except KeyError:
-    #     print(":((((")
-    #     browser = webdriver.Chrome()
 
     browser.get("https://www.epicgames.com/store/en-US/free-games")
 
@@ -52,6 +46,7 @@ def main():
         browser, getBtnPath)
 
     sleep(200)
+
 
 if __name__ == "__main__":
     main()
