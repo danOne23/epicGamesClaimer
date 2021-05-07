@@ -9,7 +9,7 @@ from time import sleep
 
 
 def clickOn(browser, xPath, timeout=10):
-    for i in range(10):
+    for _ in range(10):
         try:
             button = browser.find_element_by_xpath(xPath)
             button.click()
