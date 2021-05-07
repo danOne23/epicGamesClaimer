@@ -15,7 +15,7 @@ def clickOn(browser, xPath, timeout=10):
         try:
             button = browser.find_element_by_xpath(xPath)
             button.click()
-            break
+            return
         except:
             sleep(1)
     print('Timed out finding:', xPath)
