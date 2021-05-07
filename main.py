@@ -1,4 +1,5 @@
 import os
+import json
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -22,18 +23,22 @@ def main():
 
     browser = None
 
-    try:
-        browser_path = os.environ["BROWSER_PATH"]
-        option = webdriver.ChromeOptions()
-        option.binary_location = browser_path
-        browser = webdriver.Chrome(options=option)
-    except KeyError:
-        browser = webdriver.Chrome()
+    # try:
+    # browser_path = os.environ["BROWSER_PATH"]
+    option = webdriver.ChromeOptions()
+    # option.binary_location = browser_path
+    # option.add_argument("user-data-dir=/Users/henrik/Library/Application Support/Google/Chrome/Profile 2")
+    # option.add_argument("--disable-extensions")
+    browser = webdriver.Chrome(options=option)
+    # except KeyError:
+    #     print(":((((")
+    #     browser = webdriver.Chrome()
 
     browser.get("https://www.epicgames.com/store/en-US/free-games")
 
-    cookies = [
-    ]
+    cookies = None
+    with open('cookies.json') as file:
+        cookies = json.load(file)
 
     for cookie in cookies:
         cookie.pop('sameSite')
