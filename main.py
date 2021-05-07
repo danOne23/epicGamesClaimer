@@ -10,7 +10,7 @@ import os
 from time import sleep, thread_time
 
 
-def clickOn(browser, xPath, timeout = 10):
+def clickOn(browser, xPath, timeout=10):
     for i in range(10):
         try:
             button = browser.find_element_by_xpath(xPath)
@@ -45,7 +45,6 @@ def main():
 
     browser = None
 
-
     try:
         browser_path = os.environ["BROWSER_PATH"]
         option = webdriver.ChromeOptions()
@@ -58,13 +57,13 @@ def main():
 
     # pickle.dump( browser.get_cookies() , open("cookies.pkl","wb"))
 
-
-    
     freeGamePath = '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div[3]/div/div/div/div[2]/span/div/div/section/div/div[1]/div/div/a'
     clickOn(browser, freeGamePath)
+
+    getBtnPath = '//*[@id="dieselReactWrapper"]/div/div[4]/main/div/div[3]/div/div/div[2]/div[2]/div/aside/div/div/div[5]/div/button'
     clickOn(
-        browser, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div/div/div[2]/div/div[2]/div[2]/div/div/div[3]/div/div/div/div[3]/div/button')
-    clickOn(browser, '//*[@id="login-with-epic"]')
+        browser, getBtnPath)
+    # clickOn(browser, '//*[@id="login-with-epic"]')
 
     # Auto login
     while True:
