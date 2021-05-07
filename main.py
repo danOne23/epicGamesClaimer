@@ -1,17 +1,24 @@
+import os
+import pickle
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 import os
-from time import sleep
+from time import sleep, thread_time
 
 
-def clickOn(browser, xPath):
-    while True:
+def clickOn(browser, xPath, timeout = 10):
+    for i in range(10):
         try:
             button = browser.find_element_by_xpath(xPath)
             button.click()
             break
         except:
             sleep(1)
+    print('Timed out finding:', xPath)
 
 
 def getCredentials():
@@ -38,6 +45,7 @@ def main():
 
     browser = None
 
+
     try:
         browser_path = os.environ["BROWSER_PATH"]
         option = webdriver.ChromeOptions()
@@ -48,7 +56,11 @@ def main():
 
     browser.get("https://www.epicgames.com/store/en-US/free-games")
 
-    freeGamePath = '//*[@id="dieselReactWrapper"]/div/div[4]/main/div/div/div/div/div[2]/div[2]/div/div/section/div/div[1]/div/div/a'
+    # pickle.dump( browser.get_cookies() , open("cookies.pkl","wb"))
+
+
+    
+    freeGamePath = '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div[3]/div/div/div/div[2]/span/div/div/section/div/div[1]/div/div/a'
     clickOn(browser, freeGamePath)
     clickOn(
         browser, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div/div/div[2]/div/div[2]/div[2]/div/div/div[3]/div/div/div/div[3]/div/button')
