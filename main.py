@@ -1,5 +1,6 @@
 import os
 import pickle
+import json
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -49,8 +50,8 @@ def main():
     # browser_path = os.environ["BROWSER_PATH"]
     option = webdriver.ChromeOptions()
     # option.binary_location = browser_path
-    option.add_argument("user-data-dir=/Users/henrik/Library/Application Support/Google/Chrome/Profile 2")
-    option.add_argument("--disable-extensions")
+    # option.add_argument("user-data-dir=/Users/henrik/Library/Application Support/Google/Chrome/Profile 2")
+    # option.add_argument("--disable-extensions")
     browser = webdriver.Chrome(options=option)
     # except KeyError:
     #     print(":((((")
@@ -58,7 +59,15 @@ def main():
 
     browser.get("https://www.epicgames.com/store/en-US/free-games")
 
-    # pickle.dump( browser.get_cookies() , open("cookies.pkl","wb"))
+    cookies = None
+    with open('cookies.json') as file:
+        cookies = json.load(file)
+
+    for cookie in cookies:
+        cookie.pop('sameSite')
+        browser.add_cookie(cookie)
+
+    # pickle.dump(browser.get_cookies(), open("cookies.pkl", "wb"))
 
     freeGamePath = '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div[3]/div/div/div/div[2]/span/div/div/section/div/div[1]/div/div/a'
     clickOn(browser, freeGamePath)
@@ -66,20 +75,26 @@ def main():
     getBtnPath = '//*[@id="dieselReactWrapper"]/div/div[4]/main/div/div[3]/div/div/div[2]/div[2]/div/aside/div/div/div[5]/div/button'
     clickOn(
         browser, getBtnPath)
+
+    print("Open game page")
     # clickOn(browser, '//*[@id="login-with-epic"]')
 
     # Auto login
-    while True:
-        try:
-            login(browser, username, password)
-            break
-        except:
-            sleep(1)
+    # while True:
+    #     try:
+    #         login(browser, username, password)
+    #         break
+    #     except:
+    #         sleep(1)
 
     # Make purchase
 
     # clickOn(browser, '//*[@id="purchase-app"]/div/div[4]/div[1]/div[2]/div[4]/div/div/label/div[1]/span/i[1]')
     # clickOn(browser, '//*[@id="purchase-app"]/div/div[4]/div[1]/div[2]/div[5]/div/div/button')
+
+    print("Ordering....")
+    clickOn(
+        browser, '//*[@id="purchase-app"]/div/div[4]/div[1]/div[2]/div[5]/div/div/button')
 
     sleep(200)
 
