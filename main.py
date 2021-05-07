@@ -45,17 +45,20 @@ def main():
 
     browser = None
 
-    try:
-        browser_path = os.environ["BROWSER_PATH"]
-        option = webdriver.ChromeOptions()
-        option.binary_location = browser_path
-        browser = webdriver.Chrome(options=option)
-    except KeyError:
-        browser = webdriver.Chrome()
+    # try:
+    # browser_path = os.environ["BROWSER_PATH"]
+    option = webdriver.ChromeOptions()
+    # option.binary_location = browser_path
+    option.add_argument("user-data-dir=/Users/henrik/Library/Application Support/Google/Chrome/Profile 2")
+    option.add_argument("--disable-extensions")
+    browser = webdriver.Chrome(options=option)
+    # except KeyError:
+    #     print(":((((")
+    #     browser = webdriver.Chrome()
 
     browser.get("https://www.epicgames.com/store/en-US/free-games")
 
-    pickle.dump( browser.get_cookies() , open("cookies.pkl","wb"))
+    # pickle.dump( browser.get_cookies() , open("cookies.pkl","wb"))
 
     freeGamePath = '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div[3]/div/div/div/div[2]/span/div/div/section/div/div[1]/div/div/a'
     clickOn(browser, freeGamePath)
